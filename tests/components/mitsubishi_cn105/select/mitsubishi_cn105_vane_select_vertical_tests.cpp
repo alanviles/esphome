@@ -8,7 +8,7 @@ struct VerticalVaneDirectionSelectTestContext {
   MitsubishiCN105VerticalVaneDirectionSelect select;
 
   VerticalVaneDirectionSelectTestContext() {
-    this->select.traits.set_options({"Auto", "1", "2", "3", "4", "5", "Swing"});
+    this->select.traits.set_options({"AUTO", "↑↑", "↑", "—", "↓", "↓↓", "SWING"});
     this->select.set_parent(&this->hub);
     this->select.setup();
   }

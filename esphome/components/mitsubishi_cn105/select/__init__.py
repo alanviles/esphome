@@ -6,7 +6,6 @@ from esphome.types import ConfigType
 
 from .. import (
     MITSUBISHI_CN105_DEVICE_SCHEMA,
-    VERTICAL_VANE_DIRECTIONS,
     MitsubishiCN105Component,
     mitsubishi_ns,
     register_mitsubishi_cn105_device,
@@ -30,6 +29,10 @@ MitsubishiCN105HorizontalVaneDirectionSelect = mitsubishi_ns.class_(
     cg.Component,
     cg.Parented.template(MitsubishiCN105Component),
 )
+
+# Same labels and order as echavet VANE_MAP: AUTO, positions 1–5, SWING.
+# Order must match VALUES in select/mitsubishi_cn105_vane_select_vertical.cpp.
+VERTICAL_VANE_OPTIONS = ["AUTO", "↑↑", "↑", "—", "↓", "↓↓", "SWING"]
 
 # Order must match VALUES in select/mitsubishi_cn105_vane_select_horizontal.cpp.
 # Labels match the echavet CN105 wide-vane select: far left through swing.
@@ -56,7 +59,7 @@ async def to_code(config: ConfigType) -> None:
         await select.register_select(
             var,
             vertical_vane_direction,
-            options=[direction.capitalize() for direction in VERTICAL_VANE_DIRECTIONS],
+            options=VERTICAL_VANE_OPTIONS,
         )
         await register_mitsubishi_cn105_device(var, config)
     if horizontal_vane_direction := config.get(CONF_HORIZONTAL_VANE_DIRECTION):
